@@ -20,6 +20,16 @@ const Temperament = require("./src/models/Temperament");
 Dog.belongsToMany(Temperament, { through: "DogsTemperaments" });
 Temperament.belongsToMany(Dog, { through: "DogsTemperaments" });
 
+// Error catching endware
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || err;
+  res.status(status).json({
+    statusCode: status,
+    msg: message,
+  });
+});
+
 // Initialized Express Server
 db.sync({ force: true }).then(() => {
   app.listen(PORT, () => {

@@ -7,7 +7,7 @@ const Temperament = require("../models/Temperament");
 const dogController = require("../controllers/dogs");
 
 // GET all dogs
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const apiResults = await dogController.getAllApi();
     return res.status(200).json({
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       data: apiResults,
     });
   } catch (error) {
-    console.log(error);
+    return next(error);
   }
 });
 

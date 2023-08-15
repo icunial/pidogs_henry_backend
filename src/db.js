@@ -8,7 +8,7 @@ postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 const Dog = require("./models/Dog");
 const Temperament = require("./models/Temperament");
 
-// Model relationships
+// Model associations
 Dog.belongsToMany(Temperament, { through: "DogsTemperaments" });
 Temperament.belongsToMany(Dog, { through: "DogsTemperaments" });
 

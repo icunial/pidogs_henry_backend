@@ -7,6 +7,14 @@ const db = require("./src/db");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Instantiated Models
+const Dog = require("./src/models/Dog");
+const Temperament = require("./src/models/Temperament");
+
+// Model associations
+Dog.belongsToMany(Temperament, { through: "DogsTemperaments" });
+Temperament.belongsToMany(Dog, { through: "DogsTemperaments" });
+
 // Initialized Express Server
 db.sync({ force: true }).then(() => {
   app.listen(PORT, () => {

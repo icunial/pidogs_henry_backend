@@ -61,4 +61,4 @@ const Dog = db.define(
   }
 );
 
-module.exports = Gig;
+module.exports = Dog;

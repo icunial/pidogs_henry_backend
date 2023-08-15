@@ -10,7 +10,7 @@ const Temperament = db.define(
     },
   },
   {
-    timestamp: false,
+    timestamps: false,
   }
 );
 

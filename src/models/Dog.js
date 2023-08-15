@@ -55,7 +55,7 @@ const Dog = db.define(
     },
   },
   {
-    timestamp: true,
+    timestamps: true,
     createdAt: true,
     updatedAt: false,
   }

@@ -62,7 +62,37 @@ const findDogByIdApi = async (id) => {
   }
 };
 
+// Get dogs by its name
+const findByNameApi = async (name) => {
+  const results = [];
+  try {
+    const apiResults = await axios.get(
+      `https://api.thedogapi.com/v1/breeds/search?q=${name}`
+    );
+    if (apiResults) {
+      apiResults.data.forEach((r) => {
+        results.push({
+          id: r.id,
+          name: r.name,
+          image: `https://cdn2.thedogapi.com/images/${r.reference_image_id}.jpg`,
+          temperament: r.temperament
+            ? utils.convertTemperamentsToArray(r.temperament)
+            : [],
+          weight:
+            r.weight.metric.substring(0, 3) === "NaN"
+              ? "Not Specified"
+              : r.weight.metric,
+        });
+      });
+    }
+    return results;
+  } catch (error) {
+    throw new Error("Error trying to get a dog by its name from API");
+  }
+};
+
 module.exports = {
   getAllApi,
   findDogByIdApi,
+  findByNameApi,
 };

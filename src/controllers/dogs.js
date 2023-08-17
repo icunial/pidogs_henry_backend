@@ -112,7 +112,7 @@ const findByTemperamentApi = async (temp) => {
         });
       });
       results = results.filter((r) => {
-        return r.temperament.includes(temp);
+        return r.temperament.includes(temp.toUpperCase());
       });
 
       return results;

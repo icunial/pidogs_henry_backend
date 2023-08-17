@@ -56,25 +56,25 @@ router.get("/", async (req, res, next) => {
 });
 
 // Get dogs by its temperament
-router.get("/temperaments/:temperament", (req, res, next) => {
-  const {temperament} = req.params;
-  try{
-    if(temperament){
+router.get("/temperaments/:temperament", async (req, res, next) => {
+  const { temperament } = req.params;
+  try {
+    if (temperament) {
       const apiResults = await dogController.findByTemperamentApi(temperament);
-      if(!apiResults.length){
+      if (!apiResults.length) {
         return res.status(404).json({
-          statusCode:404,
-          msg: `Dogs with temperament ${temperament} not found!`
-        })
+          statusCode: 404,
+          msg: `Dogs with temperament ${temperament} not found!`,
+        });
       }
       return res.status(200).json({
         statusCode: 200,
-        data: apiResults
-      })
+        data: apiResults,
+      });
     }
-  }catch(error){
+  } catch (error) {
     return next(error);
   }
-})
+});
 
 module.exports = router;

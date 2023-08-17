@@ -1,6 +1,7 @@
 const axios = require("axios");
 const Dog = require("../models/Dog");
 const Temperament = require("../models/Temperament");
+const utils = require("../utils/index");
 
 // Get All Dogs from API
 const getAllApi = async () => {
@@ -13,7 +14,9 @@ const getAllApi = async () => {
           id: r.id,
           name: r.name,
           image: r.reference_image_id,
-          temperament: r.temperament,
+          temperament: r.temperament
+            ? utils.convertTemperamentsToArray(r.temperament)
+            : [],
           weight: r.weight.metric,
         });
       });
@@ -37,7 +40,9 @@ const findDogByIdApi = async (id) => {
             id: r.id,
             name: r.name,
             image: r.reference_image_id,
-            temperament: r.temperament,
+            temperament: r.temperament
+              ? utils.convertTemperamentsToArray(r.temperament)
+              : [],
             weight: r.weight.metric,
             height: r.height.metric,
             life_span: r.life_span,

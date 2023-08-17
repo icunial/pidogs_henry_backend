@@ -8,4 +8,4 @@ const convertTemperamentsToArray = (temperaments) => {
   return temperamentsArray;
 };
 
-module.exports = convertTemperamentsToArray;
+module.exports = { convertTemperamentsToArray };

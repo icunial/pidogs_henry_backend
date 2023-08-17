@@ -91,8 +91,42 @@ const findByNameApi = async (name) => {
   }
 };
 
+// Get dogs by its temperament
+const findByTemperamentApi = async (temp) => {
+  let results = [];
+  try {
+    const apiResults = await axios.get(`https://api.thedogapi.com/v1/breeds`);
+    if (apiResults) {
+      apiResults.data.forEach((r) => {
+        results.push({
+          id: r.id,
+          name: r.name,
+          image: r.reference_image_id,
+          temperament: r.temperament
+            ? utils.convertTemperamentsToArray(r.temperament)
+            : [],
+          weight:
+            r.weight.metric.substring(0, 3) === "NaN"
+              ? "Not Specified"
+              : r.weight.metric,
+        });
+      });
+      results = results.filter((r) => {
+        return r.temperament.includes(temp);
+      });
+
+      return results;
+    }
+  } catch (error) {
+    throw new Error(
+      "Error trying to get all dogs by their temperament from API"
+    );
+  }
+};
+
 module.exports = {
   getAllApi,
   findDogByIdApi,
   findByNameApi,
+  findByTemperamentApi,
 };

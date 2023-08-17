@@ -17,7 +17,10 @@ const getAllApi = async () => {
           temperament: r.temperament
             ? utils.convertTemperamentsToArray(r.temperament)
             : [],
-          weight: r.weight.metric,
+          weight:
+            r.weight.metric.substring(0, 3) === "NaN"
+              ? "Not Specified"
+              : r.weight.metric,
         });
       });
     }
@@ -43,7 +46,10 @@ const findDogByIdApi = async (id) => {
             temperament: r.temperament
               ? utils.convertTemperamentsToArray(r.temperament)
               : [],
-            weight: r.weight.metric,
+            weight:
+              r.weight.metric.substring(0, 3) === "NaN"
+                ? "Not Specified"
+                : r.weight.metric,
             height: r.height.metric,
             life_span: r.life_span,
           });

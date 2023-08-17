@@ -62,7 +62,7 @@ const findDogByIdApi = async (id) => {
   }
 };
 
-// Get dogs by its name
+// Get dogs by its name from API
 const findByNameApi = async (name) => {
   const results = [];
   try {

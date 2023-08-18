@@ -117,4 +117,40 @@ router.get("/filter/:opt", async (req, res, next) => {
   }
 });
 
+// Gets dogs from API or DB
+router.get("/from/:from", async (req, res, next) => {
+  const { from } = req.params;
+
+  try {
+    if (from === "db") {
+      const dbResults = await dogController.getAllDb();
+      if (!dbResults.length) {
+        return res.status(404).json({
+          statusCode: 404,
+          msg: `There are not dogs saved in the Database`,
+        });
+        return res.status(200).json({
+          statusCode: 200,
+          data: dbResults,
+        });
+      }
+    }
+    if (from === "api") {
+      const apiResults = await dogController.getAllApi();
+      if (!apiResults.length) {
+        return res.status(404).json({
+          statusCode: 404,
+          msg: `There are not dogs saved in the API!`,
+        });
+      }
+      return res.status(200).json({
+        statusCode: 200,
+        data: apiResults,
+      });
+    }
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

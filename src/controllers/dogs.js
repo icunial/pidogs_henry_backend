@@ -89,7 +89,8 @@ const findDogByIdApi = async (id) => {
 // Get dog by its id from DB
 const findDogByIdDb = async (id) => {
   try {
-    const dbResult = await Dog.findDogByPk(id, {
+    console.log(id);
+    const dbResult = await Dog.findByPk(id, {
       attributes: ["id", "name", "image", "weight", "height", "life_span"],
       include: Temperament,
     });

@@ -91,7 +91,7 @@ router.get("/filter/:opt", async (req, res, next) => {
     } else if (opt === "more") {
       results = await dogController.orderDogsMoreWeight();
     } else if (opt === "less") {
-      results = await dogController.orderDogsLessWeight();
+      //results = await dogController.orderDogsLessWeight();
     } else {
       return res.status(400).json({
         statusCode: 400,

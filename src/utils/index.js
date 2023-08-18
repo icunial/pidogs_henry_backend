@@ -25,6 +25,7 @@ const getAllApiConvertWeight = async () => {
         }
       });
     }
+    return results;
   } catch (error) {
     throw new Error("Error trying to get all dogs from API");
   }
@@ -39,4 +40,4 @@ const convertTemperamentsToArray = (temperaments) => {
   return temperamentsArray;
 };
 
-module.exports = { convertTemperamentsToArray };
+module.exports = { convertTemperamentsToArray, getAllApiConvertWeight };

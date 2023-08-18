@@ -180,4 +180,5 @@ module.exports = {
   findByTemperamentApi,
   orderDogsFromAtoZ,
   orderDogsFromZtoA,
+  orderDogsMoreWeight,
 };

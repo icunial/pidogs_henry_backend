@@ -89,7 +89,6 @@ const findDogByIdApi = async (id) => {
 // Get dog by its id from DB
 const findDogByIdDb = async (id) => {
   try {
-    console.log(id);
     const dbResult = await Dog.findByPk(id, {
       attributes: ["id", "name", "image", "weight", "height", "life_span"],
       include: Temperament,
@@ -298,6 +297,20 @@ const orderDogsLessWeight = async () => {
   }
 };
 
+// Delete dog from DB by its id
+const deleteDogFromDbById = async (id) => {
+  try {
+    const dogDeleted = await Dog.destroy({
+      where: {
+        id,
+      },
+    });
+    return dogDeleted;
+  } catch (error) {
+    throw new Error(`Error deleting a dog by its ID from DB`);
+  }
+};
+
 module.exports = {
   getAllApi,
   getAllDb,
@@ -311,4 +324,5 @@ module.exports = {
   orderDogsFromZtoA,
   orderDogsMoreWeight,
   orderDogsLessWeight,
+  deleteDogFromDbById,
 };

@@ -30,6 +30,29 @@ const getAllApi = async () => {
   }
 };
 
+// Get All Dogs from DB
+const getAllDb = async () => {
+  const results = [];
+  try {
+    const dbResults = await Dog.findAll({
+      attributes: ["id", "name", "image", "weight"],
+      include: Temperament,
+    });
+    dbResults.forEach((r) => {
+      results.push({
+        id: r.id,
+        name: r.name,
+        image: r.image,
+        temperament: r.temperaments.map((t) => t.name),
+        weight: r.weight,
+      });
+    });
+    return results;
+  } catch (error) {
+    throw new Error(`Error trying to get all dogs from DB`);
+  }
+};
+
 // Get dog by its id from API
 const findDogByIdApi = async (id) => {
   const result = [];
@@ -195,6 +218,7 @@ const orderDogsLessWeight = async () => {
 
 module.exports = {
   getAllApi,
+  getAllDb,
   findDogByIdApi,
   findByNameApi,
   findByTemperamentApi,

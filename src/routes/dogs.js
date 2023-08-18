@@ -88,6 +88,10 @@ router.get("/filter/:opt", async (req, res, next) => {
       results = await dogController.orderDogsFromAtoZ();
     } else if (opt === "za") {
       results = await dogController.orderDogsFromZtoA();
+    } else if (opt === "more") {
+      results = await dogController.orderDogsMoreWeight();
+    } else if (opt === "less") {
+      results = await dogController.orderDogsLessWeight();
     } else {
       return res.status(400).json({
         statusCode: 400,

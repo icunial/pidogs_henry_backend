@@ -12,7 +12,11 @@ router.get("/:id", async (req, res, next) => {
   let result = [];
 
   try {
-    result = await dogController.findDogByIdApi(id);
+    if (id.includes("-")) {
+      result = await dogController.findDogByIdDb(id);
+    } else {
+      result = await dogController.findDogByIdApi(id);
+    }
     if (!result.length)
       return res.status(404).json({
         statusCode: 404,

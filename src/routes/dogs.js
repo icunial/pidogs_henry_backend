@@ -68,7 +68,9 @@ router.get("/temperaments/:temperament", async (req, res, next) => {
   try {
     if (temperament) {
       const apiResults = await dogController.findByTemperamentApi(temperament);
-      if (!apiResults.length) {
+      const dbResults = await dogController.findByTemperamentDb(temperament);
+      const results = dbResults.concat(apiResults);
+      if (!results.length) {
         return res.status(404).json({
           statusCode: 404,
           msg: `Dogs with temperament ${temperament} not found!`,

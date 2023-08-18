@@ -344,4 +344,5 @@ module.exports = {
   orderDogsMoreWeight,
   orderDogsLessWeight,
   deleteDogFromDbById,
+  updateDogFromDb,
 };

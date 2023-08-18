@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 });
 
 // Initialized Express Server
-db.sync({ force: true }).then(() => {
+db.sync({}).then(() => {
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
   });

@@ -154,6 +154,25 @@ const orderDogsFromZtoA = async () => {
   }
 };
 
+// Get dogs ordered by their weight from more to less
+const orderDogsMoreWeight = async () => {
+  try {
+    let dogsFromApi = await utils.getAllApiConvertWeight();
+
+    return dogsFromApi.sort((a, b) => {
+      if (a.min_weight < b.min_weight) return 1;
+      if (a.min_weight > b.min_weight) return -1;
+      if (a.min_weight === b.min_weight) {
+        if (a.max_weight < b.max_weight) return 1;
+        if (a.max_weight > b.max_weight) return -1;
+      }
+      return 0;
+    });
+  } catch (error) {
+    throw new Error(`Error trying to order dogs from More Weight to Less`);
+  }
+};
+
 module.exports = {
   getAllApi,
   findDogByIdApi,

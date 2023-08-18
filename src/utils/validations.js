@@ -45,7 +45,30 @@ const validateWeight = (min_weight, max_weight) => {
   return false;
 };
 
+// Validates life span input property
+const validateLifeSpan = (min_life_span, max_life_span) => {
+  if (!min_life_span) return "Min Life Span parameter is missing";
+  if (!max_life_span) return "Max Life Span parameter is missing";
+  if (typeof min_life_span !== "number")
+    return "Min Life Span must be a number!";
+  if (typeof max_life_span !== "number")
+    return "Max Life Span must be a number!";
+  if (
+    min_life_span > 25 ||
+    min_life_span < 1 ||
+    max_life_span > 25 ||
+    min_life_span < 1
+  ) {
+    return "Life Span must be between 1 and 30";
+  }
+  if (max_life_span < min_life_span)
+    return "Max Life Span must be higher than Min Life Span";
+  return false;
+};
+
 module.exports = {
   validateName,
   validateHeight,
+  validateWeight,
+  validateLifeSpan,
 };

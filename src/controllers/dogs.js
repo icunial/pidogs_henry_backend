@@ -85,6 +85,31 @@ const findDogByIdApi = async (id) => {
   }
 };
 
+// Get dog by its id from DB
+const findDogByIdDb = async (id) => {
+  try {
+    const dbResult = await Dog.findDogByPk(id, {
+      attributes: ["id", "name", "image", "weight", "height", "life_span"],
+      include: Temperament,
+    });
+    const result = [
+      {
+        id: dbResult.id,
+        name: dbResult.name,
+        image: dbResult.image,
+        temperament: dbResult.temperaments.map((t) => t.name),
+        weight: dbResult.weight,
+        height: dbResult.height,
+        life_span: dbResult.life_span,
+      },
+    ];
+
+    return result;
+  } catch (error) {
+    throw new Error(`Error finding a dog by its ID from DB`);
+  }
+};
+
 // Get dogs by its name from API
 const findByNameApi = async (name) => {
   const results = [];
@@ -220,6 +245,7 @@ module.exports = {
   getAllApi,
   getAllDb,
   findDogByIdApi,
+  findDogByIdDb,
   findByNameApi,
   findByTemperamentApi,
   orderDogsFromAtoZ,

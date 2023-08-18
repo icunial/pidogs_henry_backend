@@ -2,6 +2,7 @@ const axios = require("axios");
 const Dog = require("../models/Dog");
 const Temperament = require("../models/Temperament");
 const utils = require("../utils/index");
+const { Op } = require("sequelize");
 
 // Get All Dogs from API
 const getAllApi = async () => {
@@ -139,6 +140,34 @@ const findByNameApi = async (name) => {
   }
 };
 
+// Get dogs by its name from DB
+const findByNameDb = async (name) => {
+  const results = [];
+  try {
+    const dbResults = await Dog.findAll({
+      attributes: ["id", "name", "image", "weight"],
+      include: Temperament,
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+    dbResults.forEach((r) => {
+      results.push({
+        id: r.id,
+        name: r.name,
+        image: r.image,
+        temperament: r.temperaments.map((t) => t.name),
+        weight: r.weight,
+      });
+    });
+    return results;
+  } catch (error) {
+    throw new Error("Error trying to get all dog by their name from DB");
+  }
+};
+
 // Get dogs by its temperament
 const findByTemperamentApi = async (temp) => {
   let results = [];
@@ -247,6 +276,7 @@ module.exports = {
   findDogByIdApi,
   findDogByIdDb,
   findByNameApi,
+  findByNameDb,
   findByTemperamentApi,
   orderDogsFromAtoZ,
   orderDogsFromZtoA,

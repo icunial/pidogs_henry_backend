@@ -35,7 +35,9 @@ router.get("/", async (req, res, next) => {
     // Search dogs by its name
     if (name) {
       const apiResults = await dogController.findByNameApi(name);
-      if (!apiResults.length)
+      const dbResults = await dogController.findByNameDb(name);
+      const results = dbResults.concat(apiResults);
+      if (!results.length)
         return res.status(404).json({
           statusCode: 404,
           msg: `Dog with name ${name} not found!`,

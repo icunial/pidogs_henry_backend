@@ -124,9 +124,25 @@ const findByTemperamentApi = async (temp) => {
   }
 };
 
+// Get dogs ordered from A to Z
+const orderDogsFromAtoZ = async () => {
+  try {
+    let dogsFromApi = await getAllApi();
+
+    return dogsFromApi.sort((a, b) => {
+      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+      return 0;
+    });
+  } catch (error) {
+    throw new Error(`Error trying to order dogs from A to Z`);
+  }
+};
+
 module.exports = {
   getAllApi,
   findDogByIdApi,
   findByNameApi,
   findByTemperamentApi,
+  orderDogsFromAtoZ,
 };

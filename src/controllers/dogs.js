@@ -111,7 +111,7 @@ const findDogByIdDb = async (id) => {
   }
 };
 
-// Get dogs by its name from API
+// Get dogs by their name from API
 const findByNameApi = async (name) => {
   const results = [];
   try {
@@ -140,7 +140,7 @@ const findByNameApi = async (name) => {
   }
 };
 
-// Get dogs by its name from DB
+// Get dogs by their name from DB
 const findByNameDb = async (name) => {
   const results = [];
   try {
@@ -168,9 +168,9 @@ const findByNameDb = async (name) => {
   }
 };
 
-// Get dogs by its temperament
+// Get dogs by their temperament from API
 const findByTemperamentApi = async (temp) => {
-  let results = [];
+  const results = [];
   try {
     const apiResults = await axios.get(`https://api.thedogapi.com/v1/breeds`);
     if (apiResults) {
@@ -198,6 +198,33 @@ const findByTemperamentApi = async (temp) => {
     throw new Error(
       "Error trying to get all dogs by their temperament from API"
     );
+  }
+};
+
+// Get dogs by their temperament from DB
+const findByTemperamentDb = async (temp) => {
+  const results = [];
+  try {
+    const dbResults = await Dog.findAll({
+      attributes: ["id", "name", "image", "weight"],
+      include: Temperament,
+    });
+    dbResults.forEach((r) => {
+      results.push({
+        id: r.id,
+        name: r.name,
+        image: r.image,
+        temperament: r.temperaments.map((t) => t.name),
+        weight: r.weight,
+      });
+    });
+    results = results.filter((r) => {
+      return r.temperament.includes(temp);
+    });
+
+    return results;
+  } catch (error) {
+    throw new Error("Error trying to get dogs by their name from DB");
   }
 };
 
@@ -278,6 +305,7 @@ module.exports = {
   findByNameApi,
   findByNameDb,
   findByTemperamentApi,
+  findByTemperamentDb,
   orderDogsFromAtoZ,
   orderDogsFromZtoA,
   orderDogsMoreWeight,

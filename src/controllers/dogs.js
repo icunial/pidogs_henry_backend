@@ -311,6 +311,25 @@ const deleteDogFromDbById = async (id) => {
   }
 };
 
+// Update dog from DB
+const updateDogFromDb = async (id, data) => {
+  try {
+    const dogUpdated = await Dog.update(
+      {
+        ...data,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    return dogUpdated;
+  } catch (error) {
+    throw new Error("Error updating a dog!");
+  }
+};
+
 module.exports = {
   getAllApi,
   getAllDb,

@@ -46,9 +46,10 @@ router.get("/", async (req, res, next) => {
       });
     }
     const apiResults = await dogController.getAllApi();
+    const dbResults = await dogController.getAllDb();
     return res.status(200).json({
       statusCode: 200,
-      data: apiResults,
+      data: dbResults.concat(apiResults),
     });
   } catch (error) {
     return next(error);

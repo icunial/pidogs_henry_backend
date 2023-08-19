@@ -27,7 +27,18 @@ router.get("/", async (req, res, next) => {
 
     temperamentsFromApi = Array.from(new Set(temperamentsFromApi));
 
-    console.log(temperamentsFromApi);
+    const tempExist = await Temperament.findOne({
+      where: {
+        name: temperamentsFromApi[0],
+      },
+    });
+
+    if (tempExist) {
+      return res.status(200).json({
+        statusCode: 200,
+        json: await Temperament.findAll({ order: [["name"]] }),
+      });
+    }
   } catch (error) {
     return next("Error trying to get all temperaments");
   }

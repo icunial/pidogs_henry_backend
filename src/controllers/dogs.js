@@ -232,8 +232,11 @@ const findByTemperamentDb = async (temp) => {
 const orderDogsFromAtoZ = async () => {
   try {
     let dogsFromApi = await getAllApi();
+    let dogsFromDb = await getAllDb();
 
-    return dogsFromApi.sort((a, b) => {
+    let results = [...dogsFromApi, ...dogsFromDb];
+
+    return results.sort((a, b) => {
       if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
       if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
       return 0;
@@ -247,8 +250,11 @@ const orderDogsFromAtoZ = async () => {
 const orderDogsFromZtoA = async () => {
   try {
     let dogsFromApi = await getAllApi();
+    let dogsFromDb = await getAllDb();
 
-    return dogsFromApi.sort((a, b) => {
+    let results = [...dogsFromApi, ...dogsFromDb];
+
+    return results.sort((a, b) => {
       if (a.name.toLowerCase() < b.name.toLowerCase()) return 1;
       if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
       return 0;

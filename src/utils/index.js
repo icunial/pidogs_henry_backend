@@ -31,6 +31,31 @@ const getAllApiConvertWeight = async () => {
   }
 };
 
+// Convert weight property from DB
+const getAllDbConvertWeight = async () => {
+  const results = [];
+  try {
+    const dbResults = await Dog.findAll({
+      attributes: ["id", "name", "image", "weight"],
+      include: Temperament,
+    });
+    dbResults.forEach((r) => {
+      results.push({
+        id: r.id,
+        name: r.name,
+        image: r.image,
+        temperament: r.temperament.map((t) => t.name),
+        min_weight: parseInt(r.weight.split(" - ")[0]),
+        max_weight: parseInt(r.weight.split(" - ")[1]),
+        weight: r.weight,
+      });
+    });
+    return results;
+  } catch (error) {
+    throw new Error("Error trying to get all dogs from DB");
+  }
+};
+
 // Convert temperaments String to Array
 const convertTemperamentsToArray = (temperaments) => {
   const temperamentsArray = [];

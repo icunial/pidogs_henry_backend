@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
     response.forEach((item) => {
       if (item !== undefined) {
         item.split(", ").forEach((i) => {
-          temperamentsFromApi.push(i);
+          temperamentsFromApi.push(i.toUpperCase());
         });
       }
     });
@@ -63,7 +63,7 @@ router.get("/:temperament", async (req, res, next) => {
 
     const result = await Temperament.findOne({
       where: {
-        name: temperament,
+        name: temperament.toUpperCase(),
       },
       include: Dog,
     });

@@ -268,8 +268,11 @@ const orderDogsFromZtoA = async () => {
 const orderDogsMoreWeight = async () => {
   try {
     const dogsFromApi = await utils.getAllApiConvertWeight();
+    const dogsFromDb = await utils.getAllDbConvertWeight();
 
-    return dogsFromApi.sort((a, b) => {
+    let results = [...dogsFromApi, ...dogsFromDb];
+
+    return result.sort((a, b) => {
       if (a.min_weight < b.min_weight) return 1;
       if (a.min_weight > b.min_weight) return -1;
       if (a.min_weight === b.min_weight) {
@@ -287,8 +290,11 @@ const orderDogsMoreWeight = async () => {
 const orderDogsLessWeight = async () => {
   try {
     const dogsFromApi = await utils.getAllApiConvertWeight();
+    const dogsFromDb = await utils.getAllDbConvertWeight();
 
-    return dogsFromApi.sort((a, b) => {
+    let results = [...dogsFromApi, ...dogsFromDb];
+
+    return results.sort((a, b) => {
       if (a.min_weight > b.min_weight) return 1;
       if (a.min_weight < b.min_weight) return -1;
       if (a.min_weight === b.min_weight) {

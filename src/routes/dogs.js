@@ -202,6 +202,26 @@ router.post("/", async (req, res, next) => {
         data: dogCreated,
       });
     }
+
+    const dogCreated = await Dog.create({
+      ...dog,
+      weight: dog.min_weight + " - " + dog.max_weight,
+      height: dog.min_height + " - " + dog.max_height,
+      life_span: dog.min_life_span + " - " + dog.max_life_span,
+      id: uuid.v4(),
+    });
+
+    dog.temperaments.forEach(async (temperament) => {
+      const temperamentFound = await Temperament.findOne({
+        where: { name: temperament },
+      });
+      temperamentFound.addDog(dogCreated.id);
+    });
+
+    res.status(201).json({
+      statusCode: 201,
+      data: dogCreated,
+    });
   } catch (error) {
     return next(new Error("Error trying to create a new dog!"));
   }

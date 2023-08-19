@@ -7,6 +7,8 @@ const Temperament = require("../models/Temperament");
 const dogController = require("../controllers/dogs");
 const validations = require("../utils/validations");
 
+const uuid = require("uuid");
+
 // Get dog by its id
 router.get("/:id", async (req, res, next) => {
   const id = req.params.id;
@@ -187,6 +189,19 @@ router.post("/", async (req, res, next) => {
   }
 
   try {
+    if (!dog.temperaments) {
+      const dogCreated = await Dog.create({
+        ...dog,
+        weight: dog.min_weight + " - " + dog.max_weight,
+        height: dog.min_height + " - " + dog.max_height,
+        life_span: dog.min_life_span + " - " + dog.max_life_span,
+        id: uuid.v4(),
+      });
+      return res.status(201).json({
+        statusCode: 201,
+        data: dogCreated,
+      });
+    }
   } catch (error) {
     return next(new Error("Error trying to create a new dog!"));
   }

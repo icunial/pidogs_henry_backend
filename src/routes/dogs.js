@@ -227,4 +227,19 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// DELETE a dog from DB
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const result = await dogController.deleteDogFromDbById(id);
+    res.status(200).json({
+      statusCode: 200,
+      data: result,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

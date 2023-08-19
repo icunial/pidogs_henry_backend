@@ -33,12 +33,24 @@ router.get("/", async (req, res, next) => {
       },
     });
 
+    // Get all temperaments from DB if are saved
     if (tempExist) {
       return res.status(200).json({
         statusCode: 200,
         json: await Temperament.findAll({ order: [["name"]] }),
       });
     }
+
+    // Create a temperament for each item in the array, in de DB
+    for (temperament of temperamentsFromApi) {
+      await Temperament.create({ name: temperament });
+    }
+
+    // Get all temperaments from DB
+    return res.status(200).json({
+      statusCode: 200,
+      json: await Temperament.findAll({ order: [["name"]] }),
+    });
   } catch (error) {
     return next("Error trying to get all temperaments");
   }

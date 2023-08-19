@@ -5,6 +5,7 @@ const Dog = require("../models/Dog");
 const Temperament = require("../models/Temperament");
 
 const dogController = require("../controllers/dogs");
+const validations = require("../utils/validations");
 
 // Get dog by its id
 router.get("/:id", async (req, res, next) => {
@@ -150,6 +151,44 @@ router.get("/from/:from", async (req, res, next) => {
     }
   } catch (error) {
     return next(error);
+  }
+});
+
+// POST a new dog
+router.post("/", async (req, res, next) => {
+  const dog = req.body;
+
+  if (validations.validateName(dog.name)) {
+    return res.status(400).json({
+      statusCode: 400,
+      msg: validations.validateName(dog.name),
+    });
+  }
+
+  if (validations.validateHeight(dog.min_height, dog.max_height)) {
+    return res.status(400).json({
+      statusCode: 400,
+      msg: validations.validateHeight(dog.min_height, dog.max_height),
+    });
+  }
+
+  if (validations.validateWeight(dog.min_weight, dog.max_weight)) {
+    return res.status(400).json({
+      statusCode: 400,
+      msg: validations.validateWeight(dog.min_weight, dog.max_weight),
+    });
+  }
+
+  if (validations.validateLifeSpan(dog.min_life_span, dog.max_life_span)) {
+    return res.status(400).json({
+      statusCode: 400,
+      msg: validations.validateLifeSpan(dog.min_life_span, dog.max_life_span),
+    });
+  }
+
+  try {
+  } catch (error) {
+    return next(new Error("Error trying to create a new dog!"));
   }
 });
 

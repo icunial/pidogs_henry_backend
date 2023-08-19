@@ -242,4 +242,20 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+// UPDATE a dog by its id
+router.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const body = req.body;
+
+  try {
+    const result = await dogController.updateDogFromDb(id, body);
+    res.status(200).json({
+      statusCode: 200,
+      data: result,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

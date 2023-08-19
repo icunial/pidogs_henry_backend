@@ -56,4 +56,30 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// Gets all dogs with a temperament
+router.get("/:temperament", async (req, res, next) => {
+  try {
+    const { temperament } = req.params;
+
+    const result = await Temperament.findOne({
+      where: {
+        name: temperament,
+      },
+      include: Dog,
+    });
+    if (!result.dogs.length) {
+      return res.status(404).json({
+        statusCode: 404,
+        msg: `Dogs with TEMPERAMENT: ${temperament} not found!`,
+      });
+    }
+    res.status(200).json({
+      statusCode: 200,
+      data: result,
+    });
+  } catch (error) {
+    return next("Error trying to get all dogs with a temperament");
+  }
+});
+
 module.exports = router;

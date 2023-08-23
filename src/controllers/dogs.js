@@ -272,7 +272,7 @@ const orderDogsMoreWeight = async () => {
 
     let results = [...dogsFromApi, ...dogsFromDb];
 
-    return result.sort((a, b) => {
+    return results.sort((a, b) => {
       if (a.min_weight < b.min_weight) return 1;
       if (a.min_weight > b.min_weight) return -1;
       if (a.min_weight === b.min_weight) {

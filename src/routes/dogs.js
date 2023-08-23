@@ -132,11 +132,11 @@ router.get("/from/:from", async (req, res, next) => {
           statusCode: 404,
           msg: `There are not dogs saved in the Database`,
         });
-        return res.status(200).json({
-          statusCode: 200,
-          data: dbResults,
-        });
       }
+      return res.status(200).json({
+        statusCode: 200,
+        data: dbResults,
+      });
     }
     if (from === "api") {
       const apiResults = await dogController.getAllApi();

@@ -51,7 +51,7 @@ router.get("/", async (req, res, next) => {
         });
       return res.status(200).json({
         statusCode: 200,
-        data: apiResults,
+        data: results,
       });
     }
     const apiResults = await dogController.getAllApi();

@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
     if (tempExist) {
       return res.status(200).json({
         statusCode: 200,
-        json: await Temperament.findAll({ order: [["name"]] }),
+        data: await Temperament.findAll({ order: [["name"]] }),
       });
     }
 
@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
     // Get all temperaments from DB
     return res.status(200).json({
       statusCode: 200,
-      json: await Temperament.findAll({ order: [["name"]] }),
+      data: await Temperament.findAll({ order: [["name"]] }),
     });
   } catch (error) {
     return next("Error trying to get all temperaments");

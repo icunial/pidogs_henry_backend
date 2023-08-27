@@ -81,7 +81,7 @@ router.get("/temperaments/:temperament", async (req, res, next) => {
       }
       return res.status(200).json({
         statusCode: 200,
-        data: apiResults,
+        data: results,
       });
     }
   } catch (error) {

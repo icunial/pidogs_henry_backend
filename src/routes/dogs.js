@@ -83,8 +83,8 @@ router.get("/", async (req, res, next) => {
       statusCode: 200,
       totalResults: results.length,
       totalPages: Math.round(results.length / 8),
-      page: 1,
-      data: dogController.getDogsPagination(results, 1),
+      page: parseInt(page) || 1,
+      data: dogController.getDogsPagination(results, parseInt(page) || 1),
     });
   } catch (error) {
     return next(error);

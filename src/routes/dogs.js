@@ -60,10 +60,21 @@ router.get("/", async (req, res, next) => {
     const results = dbResults.concat(apiResults);
 
     if (page) {
-      if (!parseInt(page)) {
+      // Validate if its a number
+      if (page !== "0" && !parseInt(page)) {
         return res.status(400).json({
           statusCode: 400,
           msg: `Page param must be a number!`,
+        });
+      }
+
+      const totalPages = Math.round(results.length / 8);
+
+      // Validates if page exists
+      if (parseInt(page) === 0 || parseInt(page) > totalPages) {
+        return res.status(404).json({
+          statusCode: 404,
+          msg: `Page ${page} not found!`,
         });
       }
     }

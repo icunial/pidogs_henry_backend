@@ -36,7 +36,7 @@ router.get("/:id", async (req, res, next) => {
 
 // GET all dogs
 router.get("/", async (req, res, next) => {
-  const { name } = req.query;
+  const { name, page } = req.query;
 
   try {
     // Search dogs by its name
@@ -54,11 +54,26 @@ router.get("/", async (req, res, next) => {
         data: results,
       });
     }
+
     const apiResults = await dogController.getAllApi();
     const dbResults = await dogController.getAllDb();
+    const results = dbResults.concat(apiResults);
+
+    if (page) {
+      if (!parseInt(page)) {
+        return res.status(400).json({
+          statusCode: 400,
+          msg: `Page param must be a number!`,
+        });
+      }
+    }
+
     return res.status(200).json({
       statusCode: 200,
-      data: dbResults.concat(apiResults),
+      totalResults: results.length,
+      totalPages: Math.round(results.length / 8),
+      page: 1,
+      data: dogController.getDogsPagination(results, 1),
     });
   } catch (error) {
     return next(error);

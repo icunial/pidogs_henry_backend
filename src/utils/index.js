@@ -65,4 +65,8 @@ const convertTemperamentsToArray = (temperaments) => {
   return temperamentsArray;
 };
 
-module.exports = { convertTemperamentsToArray, getAllApiConvertWeight };
+module.exports = {
+  convertTemperamentsToArray,
+  getAllApiConvertWeight,
+  getAllDbConvertWeight,
+};

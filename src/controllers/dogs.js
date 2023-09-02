@@ -342,6 +342,11 @@ const updateDogFromDb = async (id, data) => {
   }
 };
 
+// GET dogs pagination
+const getDogsPagination = (dogs, page) => {
+  return dogs.slice(page * 8 - 8, page * 8);
+};
+
 module.exports = {
   getAllApi,
   getAllDb,
@@ -357,4 +362,5 @@ module.exports = {
   orderDogsLessWeight,
   deleteDogFromDbById,
   updateDogFromDb,
+  getDogsPagination,
 };

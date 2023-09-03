@@ -311,13 +311,21 @@ const orderDogsLessWeight = async () => {
 
 // Delete dog from DB by its id
 const deleteDogFromDbById = async (id) => {
+  let result = [];
   try {
-    const dogDeleted = await Dog.destroy({
-      where: {
-        id,
-      },
-    });
-    return dogDeleted;
+    result = await findDogByIdDb(id);
+    if (result.length === 1) {
+      const dogDeleted = await Dog.destroy({
+        where: {
+          id,
+        },
+      });
+
+      if (dogDeleted) {
+        return result;
+      }
+    }
+    return result;
   } catch (error) {
     throw new Error(`Error deleting a dog by its ID from DB`);
   }

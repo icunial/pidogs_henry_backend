@@ -281,6 +281,12 @@ router.put("/:id", async (req, res, next) => {
 
   try {
     const result = await dogController.updateDogFromDb(id, body);
+    if (!result.length) {
+      return res.status(404).json({
+        statusCode: 404,
+        msg: `Dog with ID: ${id} not found!`,
+      });
+    }
     res.status(200).json({
       statusCode: 200,
       data: result,

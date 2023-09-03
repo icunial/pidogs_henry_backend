@@ -88,13 +88,14 @@ const findDogByIdApi = async (id) => {
 
 // Get dog by its id from DB
 const findDogByIdDb = async (id) => {
+  const result = [];
   try {
     const dbResult = await Dog.findByPk(id, {
       attributes: ["id", "name", "image", "weight", "height", "life_span"],
       include: Temperament,
     });
-    const result = [
-      {
+    if (dbResult) {
+      result.push({
         id: dbResult.id,
         name: dbResult.name,
         image: dbResult.image,
@@ -102,8 +103,8 @@ const findDogByIdDb = async (id) => {
         weight: dbResult.weight,
         height: dbResult.height,
         life_span: dbResult.life_span,
-      },
-    ];
+      });
+    }
 
     return result;
   } catch (error) {
@@ -344,7 +345,13 @@ const updateDogFromDb = async (id, data) => {
         },
       }
     );
-    return dogUpdated;
+
+    if (dogUpdated) {
+      const dogFound = await findDogByIdDb(id);
+      return dogFound;
+    } else {
+      return [];
+    }
   } catch (error) {
     throw new Error("Error updating a dog!");
   }
